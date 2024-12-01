@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <title>Pflichtteil Mixed Reality</title>
+    <meta name="description" content="Model Viewer (VR / AR) • A-Frame">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <!--<script src="info-message.js"></script>-->
+    <script src="https://unpkg.com/aframe-extras@3.3.0/dist/aframe-extras.min.js"></script>
+    <script src="pflichtteil.js"></script>
+
+</head>
+
+<!--A-Frame-Szene-->
+<a-scene>
+    <!-- Kamera -->
+    <a-entity id="camera" position="0 5 15">
+        <a-camera>
+            id="camera"
+            position="0 8 8"
+            raycaster="objects: .cantap"
+            cursor="
+            fuse: false;
+            rayOrigin: mouse;">
+        </a-camera>
+    </a-entity>
+
+    <!--grauer "boden"-->
+    <a-plane color="grey"
+             rotation="-90 0 0" width="50" height="50" position="0 0 0"
+             shadow="receive: true"></a-plane>
+
+
+    <!-- Objekte -->
+    <a-box color="red" position="0 2 -5" rotation="0 45 45" scale="2 2 2" shadow="cast: true"></a-box>
+    <a-sphere src="assets/stein.jpg" position="2 1 -5" radius="1.25" shadow="cast: true"></a-sphere>
+    <a-cylinder color="green" position="2 0 -5" radius="0.5" height="1.5" shadow="cast: true"></a-cylinder>
+    <a-box color="red" position="0 5 -5" rotation="0 45 45" scale="2 2 2" shadow="cast: true"></a-box>
+    <a-box color="blue" position="0 4 0" scale="5 0.1 1" shadow="cast: true"></a-box>
+    <!-- Himmel -->
+    <a-sky color="white"></a-sky>
+    <!-- Lichtquelle -->
+    <a-entity light="type: directional; intensity: 0.8; castShadow: true"
+              position="15 35 -10" ></a-entity>
+    <a-entity light="type: ambient; intensity: 0.5"></a-entity>
+
+    <!--eingelesenes Objekt-->
+    <!--<a-entity gltf-model="assets/main_schnickschnack.glb" id="main_schnickschnack"
+              position="0 0 -10" scale="-1 -1 -1"  rotation="1 1 1 " shadow="cast: true; receive: true" material="side: double;"></a-entity>-->
+
+    <a-entity gltf-model="assets/tisch.glb" id="tisch"
+              position="8 0 -5" scale="10 10 10"  rotation="1 1 1 " shadow="cast: true;" shadow="received: true"></a-entity>
+
+</a-scene>
+<!--Kamera dynamisch anpassen-->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var camera = document.getElementById('camera');
+        document.addEventListener('wheel', function (event) {
+            var position = camera.getAttribute('position');
+            position.z += event.deltaY * 0.01;
+            camera.setAttribute('position', position);
+        });
+    });
+</script>
+</html>
